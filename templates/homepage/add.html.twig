@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} Ajouter un article {% endblock %}
+
+{% block body %}
+<div  class="container">
+    <div class="row">
+        <div class="col12">
+            <h4>Ajouter un article</h4>
+        </div>
+    </div>
+    {% include "homepage/article_form.html.twig" %}
+</div>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Blogger;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -21,9 +22,7 @@ class ArticleType extends AbstractType
             ->add('Content', TextareaType::class)
             ->add('picture', FileType::class)
             ->add('category', TextType::class)
-            ->add('isPublished', CheckboxType::class)
-            ->add('blogger', EntityType::class )
-        ;
+            ->add('isPublished', CheckboxType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
