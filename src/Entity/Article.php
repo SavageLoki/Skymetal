@@ -52,6 +52,12 @@ class Article
      */
     private $isPublished;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Blogger::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $blogger;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +143,18 @@ class Article
     public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getBlogger(): ?Blogger
+    {
+        return $this->blogger;
+    }
+
+    public function setBlogger(?Blogger $blogger): self
+    {
+        $this->blogger = $blogger;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BloggerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -22,6 +24,16 @@ class Blogger extends User
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthdate;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="blogger", orphanRemoval=true)
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -49,6 +61,36 @@ class Blogger extends User
     public function setBirthdate(?\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setBlogger($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getBlogger() === $this) {
+                $article->setBlogger(null);
+            }
+        }
 
         return $this;
     }
