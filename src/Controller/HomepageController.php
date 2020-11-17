@@ -29,6 +29,8 @@ class HomepageController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
+
+        // Don't forget to set up the blogger name
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setLastUpdate(new \DateTime());
@@ -53,14 +55,65 @@ class HomepageController extends AbstractController
                 $article->setPublicationDate(new \DateTime());
             }
 
-            $em = $this->getDoctrine()->getManager(); // On récupère l'entity manager
-            $em->persist($article); // On confie notre entité à l'entity manager (on persist l'entité)
-            $em->flush(); // On execute la requete
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
 
             return new Response('Article submitted');
         }
 
         return $this->render('homepage/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     * @param Article $article
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Article $article, Request $request)
+    {
+        $oldPicture = $article->getPicture();
+
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setLastUpdate(new \DateTime());
+
+            if ($article->getIsPublished()) {
+                $article->setPublicationDate(new \DateTime());
+            }
+
+            if ($article->getPicture() !== null && $article->getPicture() !== $oldPicture) {
+                $file = $form->get('picture')->getData();
+                $fileName = uniqid(). '.' .$file->guessExtension();
+
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    return new Response($e->getMessage());
+                }
+
+                $article->setPicture($fileName);
+            } else {
+                $article->setPicture($oldPicture);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            return new Response('Modifications registered');
+        }
+
+        return $this->render('homepage/edit.html.twig', [
+            'article' => $article,
             'form' => $form->createView()
         ]);
     }

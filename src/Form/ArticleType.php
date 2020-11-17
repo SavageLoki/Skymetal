@@ -20,9 +20,12 @@ class ArticleType extends AbstractType
         $builder
             ->add('title', TextType::class, ['required' => false])
             ->add('Content', TextareaType::class, ['required' => false])
-            ->add('picture', FileType::class, ['required' => false])
             ->add('category', TextType::class, ['required' => false])
-            ->add('isPublished', CheckboxType::class, ['required' => false]);
+            ->add('isPublished', CheckboxType::class, ['required' => false])
+            ->add('picture', FileType::class, [
+                'required' => false,
+                'data_class' => null
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
