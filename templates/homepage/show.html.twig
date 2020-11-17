@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+    <article class="container">
+        <div class="row">
+            <div class="col s12 m12 l8 offset-l2">
+                <h2>{{ article.title }}</h2>
+                <span>{{ article.publicationDate|date('d/m/Y') }}</span>
+                <p>
+                    <img src="{{ asset('uploads/' ~ article.picture) }}" class="responsive-img">
+                </p>
+                           </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l8 offset-l2">
+                <p>
+                    {{ article.Content }}
+                </p>
+            </div>
+    </article>
+{% endblock %}

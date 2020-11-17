@@ -12,11 +12,28 @@ use App\Form\ArticleType;
 class HomepageController extends AbstractController
 {
     /**
-     * @Route("/homepage", name="homepage")
+     * @Route("/", name="homepage")
      */
         public function index(): Response
     {
-        return $this->render("homepage/homepage.html.twig");
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
+            ['isPublished' => true],
+            ['publicationDate' => 'desc']
+        );
+
+        return $this->render('homepage/index.html.twig', ['articles' => $articles]);
+    }
+
+    /**
+     * @Route("show/{id}", name="article_show")
+     * @param Article $article
+     * @return mixed
+     */
+    public function show(Article $article)
+    {
+        return $this->render('homepage/show.html.twig', [
+            'article' => $article
+        ]);
     }
 
     /**
