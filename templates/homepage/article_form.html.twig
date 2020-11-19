@@ -1,0 +1,19 @@
+{{ form_start(form, {'attr': {'class': 'row'}}) }}
+    {{ form_widget(form.picture) }}
+
+    {{ form_widget(form.title, {'attr': {'placeholder': 'Ceci est un titre'}}) }}
+    {{ form_label(form.title) }}
+  {{ form_errors(form.title) }}
+
+    {{ form_widget(form.Content, {'attr': {'class': 'materialize-textarea', 'placeholder': 'Ceci est un corps'}}) }}
+
+    <p>
+        <label>
+            {{ form_widget(form.isPublished, {'attr': {'class': 'filled-in'}}) }}
+            <span>Send</span>
+        </label>
+    </p>
+
+    <input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+
+{{ form_end(form) }}
