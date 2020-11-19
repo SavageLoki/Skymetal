@@ -46,6 +46,9 @@ class HomepageController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
+        $user = $this->getUser();
+        $article->setCompany($user);
+
 
         // Don't forget to set up the blogger name
         $form->handleRequest($request);
