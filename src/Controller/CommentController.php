@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/comment")
  */
+
+//rajouter ici un id qui correspond à l'article qui contient les commentaires.
 class CommentController extends AbstractController
 {
     /**
@@ -20,6 +22,7 @@ class CommentController extends AbstractController
      */
     public function index(CommentRepository $commentRepository): Response
     {
+        // renvoit vers la route qui correspond à montrer un seul article avec l'id de l'article qui est donné dans la route
         return $this->render('comment/index.html.twig', [
             'comments' => $commentRepository->findAll(),
         ]);
@@ -37,8 +40,8 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            $user = $this->getUser();
-            $comment->setAuthor($user);
+            //$user = $this->getUser();
+            //$comment->setAuthor($user);
 
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -55,6 +58,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/{id}", name="comment_show", methods={"GET"})
      */
+    // peut-être pas très utile de laisser cette route  x
     public function show(Comment $comment): Response
     {
         return $this->render('comment/show.html.twig', [
