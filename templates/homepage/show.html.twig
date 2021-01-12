@@ -3,13 +3,23 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block content %}
-                <h2>{{ article.title }}</h2>
-                {{ article.publicationDate|date('d/m/Y') }}
-                <p>
-                    <img src="{{ asset('uploads/' ~ article.picture) }}" >
-                </p>
-                <p>
-                    {{ article.Content }}
-                </p>
+    <h2>{{ article.title }}</h2>
+    {{ article.publicationDate|date('d/m/Y') }}
+    <p>
+        <img src="{{ asset('uploads/' ~ article.picture) }}">
+    </p>
+    <p>
+        {{ article.Content }}
+    </p>
 
+    <section class="comments" id="comments">
+        <h4><a href="{{ path("comment_new") }}">Add Comment</a></h4>
+        <h3>Comments</h3>
+
+        {{ render(controller(
+            'App\\Controller\\CommentController::index'
+        )) }}
+
+        {{ render(controller('App\\Controller\\CommentController::new')) }}
+    </section>
 {% endblock %}

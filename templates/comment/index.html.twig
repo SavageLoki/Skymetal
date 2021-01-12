@@ -1,0 +1,19 @@
+{% block content %}
+    {% for comment in comments %}
+    <tr>
+        <td>{{ comment.id }}</td>
+        <td>{{ comment.commentContent }}</td>
+        <td>{{ comment.dateComment ? comment.dateComment|date('Y-m-d') : '' }}</td>
+        <td>
+            <a href="{ path('comment_show', {'id': comment.id}) }}">show</a>
+            <a href="{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="4">no records found</td>
+    </tr>
+    {% endfor %}
+
+
+{% endblock %}
