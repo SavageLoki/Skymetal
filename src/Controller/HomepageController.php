@@ -43,6 +43,8 @@ class HomepageController extends AbstractController
      */
     public function add(Request $request)
     {
+
+        $this->denyAccessUnlessGranted("ROLE_BLOGGER");
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
@@ -95,6 +97,15 @@ class HomepageController extends AbstractController
      */
     public function edit(Article $article, Request $request)
     {
+        $this->denyAccessUnlessGranted("ROLE_BLOGGER");
+
+        $user = $this->getUser();
+        $author = $article->getBlogger();
+
+        // Check if the user is the author
+        if ($user->getId() != $author->getId()) {
+            return $this->redirectToRoute("error_403");
+        }
         $oldPicture = $article->getPicture();
 
         $form = $this->createForm(ArticleType::class, $article);
