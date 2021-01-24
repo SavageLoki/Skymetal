@@ -95,10 +95,14 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-
+        $roles = $token->getUser()->getRoles();
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-       //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-        return new RedirectResponse($this->urlGenerator->generate('last_article'));
+        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        if (in_array('ROLE_BLOGGER', $roles)) {
+            return new RedirectResponse($this->urlGenerator->generate('homepage'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('last_article'));
+        }
     }
 
     protected function getLoginUrl()

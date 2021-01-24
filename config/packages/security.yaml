@@ -23,9 +23,6 @@ security:
         main:
             anonymous: true
             lazy: true
-            form_login:
-                default_target_path: last_article
-                always_use_default_target_path: true
             provider: chain_provider
             guard:
                 authenticators:
