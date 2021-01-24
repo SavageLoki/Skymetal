@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,24 +32,35 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="comment_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="comment_new")
+     * @param Request $request
+     * @param Article $article
+     * @param User $user
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Article $article, User $user): Response
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
+        $form = $this->createForm(CommentType::class, $comment, [
+            'action' => $this->generateUrl('comment_new', array('id'=>$article->getId())),
+            'method' => 'POST'
+        ]);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment->setAuthor($user);
+            $comment->setDateComment(new \DateTime());
+
+            //Lie l'article au commentaire
+            $comment->setArticle($article);
+
             $entityManager = $this->getDoctrine()->getManager();
-
-            //$user = $this->getUser();
-            //$comment->setAuthor($user);
-
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('article_show', ['id'=>$article->getId()]);
+
         }
 
         return $this->render('comment/new.html.twig', [
