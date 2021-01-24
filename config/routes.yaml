@@ -5,3 +5,8 @@
 homepage:
   path: /
   controller: App\Controller\HomepageController::index
+
+#last_article:
+ #   path: /last
+  #  controller: App\Controller\HomepageController::lastArticle
+
