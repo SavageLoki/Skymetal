@@ -149,5 +149,19 @@ class HomepageController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/last", name="last_article")
+     * @return Response
+     */
+    public function lastArticle () {
+        $entityManager = $this->getDoctrine();
+        $repository = $entityManager->getRepository(Article::class);
+        $result = $repository->findBy(array(),array('id'=>'DESC'),1,0);
+
+       // $result = $this->getDoctrine()->getRepository(Article::class)->findBy(['id' => 'DESC']);
+      $id = $result[0]->getId();
+
+        return $this->redirectToRoute('article_show', ['id' =>$id]);
+    }
 
 }
