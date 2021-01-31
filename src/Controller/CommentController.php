@@ -20,14 +20,16 @@ class CommentController extends AbstractController
 {
     /**
      * @Route("/", name="comment_index", methods={"GET"})
+     * @param CommentRepository $commentRepository
+     * @return Response
      */
     public function index(CommentRepository $commentRepository): Response
     {
-        $comments = $commentRepository->findAll();
+        $comments = $commentRepository->findAll(['date_comment' => 'desc']);
 
-        // renvoit vers la route qui correspond à montrer un seul article avec l'id de l'article qui est donné dans la route
+
         return $this->render('comment/index.html.twig', [
-            'comments' => $comments,
+            'comments' => $comments
         ]);
     }
 
@@ -92,14 +94,14 @@ class CommentController extends AbstractController
      */
     public function edit(Request $request, Comment $comment): Response
     {
-
-        $user = $this->getUser();
-        $author = $comment->getBlogger();
+        $this->denyAccessUnlessGranted('ROLE_BLOGGER');
+       // $user = $this->getUser();
+       // $author = $comment->getAuthor();
 
         // Check if the user is the author
-        if ($user->getId() != $author->getId()) {
-            return $this->redirectToRoute("error_403");
-        }
+      //  if ($user->getId() != $author->getId()) {
+        //    return $this->redirectToRoute("error_403");
+        //}
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -117,7 +119,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="comment_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="comment_delete", methods={"DELETE"})
      * @param Request $request
      * @param Comment $comment
      * @return Response
@@ -125,19 +127,19 @@ class CommentController extends AbstractController
     public function delete(Request $request, Comment $comment): Response
     {
 
-        $user = $this->getUser();
-        $author = $comment->getBlogger();
+       // $user = $this->getUser();
+       // $author = $comment->getBlogger();
 
         // Check if the user is the author
-        if ($user->getId() != $author->getId()) {
-            return $this->redirectToRoute("error_403");
-        }
+       // if ($user->getId() != $author->getId()) {
+       //     return $this->redirectToRoute("error_403");
+      //  }
         if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($comment);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('comment_index');
+        return $this->redirectToRoute('dashboard');
     }
 }

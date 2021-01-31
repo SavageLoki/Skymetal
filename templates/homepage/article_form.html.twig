@@ -1,12 +1,14 @@
-{{ form_start(form, {'attr': {'class': 'row'}}) }}
+{{ form_start(form, {'attr': {'class': 'row', 'onsubmit':'return getContent()'}}) }}
     {{ form_widget(form.picture) }}
 
-    {{ form_widget(form.title, {'attr': {'placeholder': 'Ceci est un titre'}}) }}
-    {{ form_label(form.title) }}
+
+<div id="my-title" contenteditable="true">Ceci est un titre</div>
+    {{ form_widget(form.title, {'attr': {'hidden':'true'}}) }}
+
   {{ form_errors(form.title) }}
 
-    {{ form_widget(form.Content, {'attr': {'class': 'materialize-textarea', 'placeholder': 'Ceci est un corps'}}) }}
-
+<div id="my-content" contenteditable="true">Ceci est un corps</div>
+ {{ form_widget(form.Content, {'attr': {'hidden':'true'}}) }}
     <p>
         <label>
             {{ form_widget(form.isPublished, {'attr': {'class': 'filled-in'}}) }}

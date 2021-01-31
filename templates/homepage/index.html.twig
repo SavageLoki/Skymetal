@@ -5,9 +5,15 @@
 
 {% block content %}
             {% for article in articles %}
+                {% if article.isPublished == 1  %}
+                    {% if article.picture != NULL %}
                         <img src="{{ asset('uploads/' ~ article.picture) }}" class="responsive-img">
+                    {% endif %}
                         <h2><a href="{{ path("article_show", {"id":article.id}) }}">{{ article.title }}</a></h2>
                         <span class="date">{{ article.publicationDate|date('d/m/Y') }}</span>
+
+                {% endif %}
             {% endfor %}
+
 
 {% endblock %}

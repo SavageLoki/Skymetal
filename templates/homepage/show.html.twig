@@ -23,5 +23,9 @@
 
 
        {{ render(controller('App\\Controller\\CommentController::new', {'id': article.id})) }}
+
+        {{ render(controller(
+            'App\\Controller\\HomepageController::index'
+        )) }}
     </section>
 {% endblock %}

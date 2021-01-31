@@ -10,3 +10,16 @@ homepage:
  #   path: /last
   #  controller: App\Controller\HomepageController::lastArticle
 
+comment_edit:
+  path: /comment/{id}/edit
+  controller: App\Controller\CommentController::edit
+
+comment_delete:
+  path: /comment/{id}/delete
+  controller: App\Controller\CommentController::delete
+
+dashboard:
+  path: /dashboard
+  controller: App\Controller\HomepageController::dashboard
+
+

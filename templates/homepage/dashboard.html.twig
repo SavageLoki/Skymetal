@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Homepage {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    <a href="{{  path('add') }}">Add an article</a>
+    {% for article in articles %}
+        <img src="{{ asset('uploads/' ~ article.picture) }}" class="responsive-img">
+        <h2><a href="{{ path("article_show", {"id":article.id}) }}">{{ article.title }}</a></h2>
+        <span class="date">{{ article.publicationDate|date('d/m/Y') }}</span>
+    {% endfor %}
+
+    {{ render(controller(
+        'App\\Controller\\CommentController::index',
+        { 'max': 5 }
+    )) }}
+
+
+
+{% endblock %}

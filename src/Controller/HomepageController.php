@@ -48,14 +48,18 @@ class HomepageController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
-        $user = $this->getUser();
-        $article->setBlogger($user);
 
 
-        // Don't forget to set up the blogger name
+
+
+
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setLastUpdate(new \DateTime());
+            $user = $this->getUser();
+            $article->setBlogger($user);
+            $article->setPublicationDate(new \DateTime());
 
             if ($article->getPicture() !== null) {
                 $file = $form->get('picture')->getData();
@@ -99,13 +103,13 @@ class HomepageController extends AbstractController
     {
         $this->denyAccessUnlessGranted("ROLE_BLOGGER");
 
-        $user = $this->getUser();
-        $author = $article->getBlogger();
+        //$user = $this->getUser();
+        //$author = $article->getBlogger();
 
         // Check if the user is the author
-        if ($user->getId() != $author->getId()) {
-            return $this->redirectToRoute("error_403");
-        }
+       // if ($user->getId() != $author->getId()) {
+         //   return $this->redirectToRoute("error_403");
+       // }
         $oldPicture = $article->getPicture();
 
         $form = $this->createForm(ArticleType::class, $article);
@@ -162,6 +166,19 @@ class HomepageController extends AbstractController
       $id = $result[0]->getId();
 
         return $this->redirectToRoute('article_show', ['id' =>$id]);
+    }
+
+    /**
+     * @Route("/dashboard", name="dashboard")
+     * @return Response
+     */
+    public function dashboard() {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
+            ['isPublished' => true],
+            ['publicationDate' => 'desc']
+        );
+
+        return $this->render('homepage/dashboard.html.twig', ['articles' => $articles]);
     }
 
 }

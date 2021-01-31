@@ -1,12 +1,13 @@
 {% block content %}
     {% for comment in comments %}
     <tr>
-        <td>{{ comment.id }}</td>
+        <td>{{ comment.article.id }}</td>
         <td>{{ comment.commentContent }}</td>
         <td>{{ comment.dateComment ? comment.dateComment|date('Y-m-d') : '' }}</td>
         <td>
-            <a href="{ path('comment_show', {'id': comment.id}) }}">show</a>
-            <a href="{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+            <a href="{{  path('comment_edit', {'id': comment.id}) }}">edit</a>
+            {{ include('comment/_delete_form.html.twig') }}
+
         </td>
     </tr>
     {% else %}
