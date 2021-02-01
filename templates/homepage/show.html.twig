@@ -2,16 +2,33 @@
 
 {% block title %}{{ article.title }}{% endblock %}
 
+
 {% block content %}
+    <div class="fullArticle">
+        <div class="articleOne">
+    <div class="showArticle">
+        <div class="showArticleContent">
+            <div class="articleTitleDiv">
+                <div class="articleTitle">
     <h2>{{ article.title }}</h2>
+                    &nbsp;&nbsp;
     {{ article.publicationDate|date('d/m/Y') }}
+            </div>
+            </div>
     <p>
+        {% if article.picture != NULL %}
         <img src="{{ asset('uploads/' ~ article.picture) }}">
+        {% endif %}
     </p>
-    <p>
+    <div class="articleContent">
+        <p>
+
         {{ article.Content }}
 
-    </p>
+        </p>
+    </div>
+        </div>
+    </div>
 
     <section class="comments" id="comments">
 
@@ -21,11 +38,20 @@
             'App\\Controller\\CommentController::index'
         )) }}
 
-
+    <div class="newComment">
+        <div class ='newCommentContent'>
        {{ render(controller('App\\Controller\\CommentController::new', {'id': article.id})) }}
-
+        </div>
+    </div>
+    </section>
+        </div>
+    <div class="blocArticle">
+        <h3>Derniers articles</h3>
         {{ render(controller(
             'App\\Controller\\HomepageController::index'
         )) }}
-    </section>
+    </div>
+
+    </div>
+
 {% endblock %}

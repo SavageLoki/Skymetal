@@ -48,12 +48,6 @@ class HomepageController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
-
-
-
-
-
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setLastUpdate(new \DateTime());
@@ -180,5 +174,6 @@ class HomepageController extends AbstractController
 
         return $this->render('homepage/dashboard.html.twig', ['articles' => $articles]);
     }
+
 
 }

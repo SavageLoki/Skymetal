@@ -1,0 +1,42 @@
+.dashboard {
+    display: flex;
+}
+
+.dashboardArticle a {
+    color: black;
+}
+
+.dashboardArticle {
+    border: solid black;
+    background-color: white;
+    margin: 2%;
+    width: 30%;
+}
+
+.dashboardComment {
+    margin: 5%;
+    border: solid black;
+    background-color: white;
+    width: 50%;
+    height: 100%;
+}
+
+.dashboardArticleContent {
+    margin: 2%;
+}
+
+.publicationTitle {
+    display: flex;
+    align-items: baseline;
+}
+
+.dashboardArticle h2 {
+    color: #5eb5e0;
+}
+.button {
+    margin: 2%;
+}
+
+.dashboardCommentContent {
+    margin: 2%;
+}

@@ -1,20 +1,36 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Homepage {{ parent() }}{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
 
 {% block content %}
-
-    <a href="{{  path('add') }}">Add an article</a>
+    <div class="dashboard">
+        <div class="dashboardArticle">
+    <button class="button" href="{{  path('add') }}">Add an article</button>
+            <div class="dashboardArticleContent">
+                <h2>Derniers articles</h2>
     {% for article in articles %}
+        {% if article.picture != NULL %}
         <img src="{{ asset('uploads/' ~ article.picture) }}" class="responsive-img">
+        {% endif %}
+        <div class="publicationTitle">
         <h2><a href="{{ path("article_show", {"id":article.id}) }}">{{ article.title }}</a></h2>
-        <span class="date">{{ article.publicationDate|date('d/m/Y') }}</span>
+            &nbsp;
+        <span class="date">publié le&nbsp;{{ article.publicationDate|date('d/m/Y') }}</span>
+        </div>
     {% endfor %}
+            </div>
+        </div>
 
+        <div class="dashboardComment">
+            <div class="dashboardCommentContent">
     {{ render(controller(
         'App\\Controller\\CommentController::index',
         { 'max': 5 }
     )) }}
+            </div>
+        </div>
+    </div>
 
 
 
