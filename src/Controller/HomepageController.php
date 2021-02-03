@@ -16,10 +16,7 @@ class HomepageController extends AbstractController
      */
         public function index(): Response
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
-            ['isPublished' => true],
-            ['publicationDate' => 'desc']
-        );
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['publicationDate' => 'desc']);
 
         return $this->render('homepage/index.html.twig', ['articles' => $articles]);
     }
@@ -79,7 +76,7 @@ class HomepageController extends AbstractController
             $em->persist($article);
             $em->flush();
 
-            return new Response('Article submitted');
+           return $this->redirectToRoute('homepage');
         }
 
         return $this->render('homepage/add.html.twig', [
@@ -168,7 +165,7 @@ class HomepageController extends AbstractController
      */
     public function dashboard() {
         $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
-            ['isPublished' => true],
+            [],
             ['publicationDate' => 'desc']
         );
 

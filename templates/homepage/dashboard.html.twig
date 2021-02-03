@@ -6,7 +6,7 @@
 {% block content %}
     <div class="dashboard">
         <div class="dashboardArticle">
-    <button class="button" href="{{  path('add') }}">Add an article</button>
+    <a href="{{  path('add') }}">Add an article</a>
             <div class="dashboardArticleContent">
                 <h2>Derniers articles</h2>
     {% for article in articles %}

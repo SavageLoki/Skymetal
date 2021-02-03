@@ -23,7 +23,8 @@
     <div class="articleContent">
         <p>
 
-        {{ article.Content }}
+        {{ article.Content }}//
+
 
         </p>
     </div>
@@ -35,7 +36,7 @@
         <h3>Comments</h3>
 
         {{ render(controller(
-            'App\\Controller\\CommentController::index'
+            'App\\Controller\\CommentController::commentByBlog', {'id': article.id}
         )) }}
 
     <div class="newComment">

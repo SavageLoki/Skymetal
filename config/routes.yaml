@@ -22,4 +22,6 @@ dashboard:
   path: /dashboard
   controller: App\Controller\HomepageController::dashboard
 
-
+add:
+  path: /add
+  controller: App\Controller\HomepageController::add

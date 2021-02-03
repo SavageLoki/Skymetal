@@ -1,5 +1,7 @@
 {% block content %}
+
     {% for comment in comments %}
+
         <div class="oneComment">
         <div class="commentTitle">
         Article lié: {{ comment.article.id }}
@@ -22,6 +24,9 @@
     <tr>
         <td colspan="4">no records found</td>
     </tr>
+
+
+
     {% endfor %}
 
 
