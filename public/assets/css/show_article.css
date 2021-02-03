@@ -1,0 +1,96 @@
+.showArticle {
+    border: solid #6E6E6E;
+    width: 50%;
+    margin: 2%;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.articleTitleDiv {
+    border-bottom: solid black;
+    background-color: #7DA0B1;
+    display: flex;
+
+    }
+
+.articleTitle {
+    display: flex;
+    align-items: baseline;
+}
+
+.articleContent {
+    margin: 3%;
+    font-size: large;
+}
+
+.comments {
+    margin: 2%;
+    border: solid #6E6E6E;
+    width: 50%;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.commentContent {
+    margin-bottom: 3%;
+}
+
+.boutonComment {
+    display: flex;
+}
+
+.commentTitle {
+    display: flex;
+    align-items: baseline;
+}
+
+.oneComment {
+    border: solid lightblue;
+    width: 50%;
+    margin-left: 2%;
+}
+
+.newComment {
+    border-top: solid;
+    margin-top: 2%;
+}
+
+.comments h3 {
+    text-align: center;
+    color: #5eb5e0;
+}
+
+.blocArticle .topnav {
+    display: none;
+}
+
+.newCommentContent {
+    margin: 2%;
+}
+
+.blocArticle {
+    width: 30%;
+    border: solid;
+    margin: 2%;
+    height: 45%;
+    border-radius: 15px;
+    background-color: #7DA0B1;
+}
+.blocArticle .articles {
+    width: 75%;
+    font-size: small;
+}
+
+.fullArticle {
+    display: flex;
+    justify-content: space-around;
+}
+
+.articleOne {
+    width: 80%;
+
+}
+
+.blocArticle h3 {
+    text-align: center;
+}

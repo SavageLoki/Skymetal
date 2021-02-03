@@ -16,10 +16,7 @@ class HomepageController extends AbstractController
      */
         public function index(): Response
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
-            ['isPublished' => true],
-            ['publicationDate' => 'desc']
-        );
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['publicationDate' => 'desc']);
 
         return $this->render('homepage/index.html.twig', ['articles' => $articles]);
     }
@@ -47,12 +44,6 @@ class HomepageController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_BLOGGER");
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
-
-
-
-
-
-
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -85,7 +76,7 @@ class HomepageController extends AbstractController
             $em->persist($article);
             $em->flush();
 
-            return new Response('Article submitted');
+           return $this->redirectToRoute('homepage');
         }
 
         return $this->render('homepage/add.html.twig', [
@@ -174,11 +165,12 @@ class HomepageController extends AbstractController
      */
     public function dashboard() {
         $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
-            ['isPublished' => true],
+            [],
             ['publicationDate' => 'desc']
         );
 
         return $this->render('homepage/dashboard.html.twig', ['articles' => $articles]);
     }
+
 
 }

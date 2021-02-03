@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+
 
 /**
  * @Route("/comment")
@@ -18,15 +20,42 @@ use Symfony\Component\Routing\Annotation\Route;
 //rajouter ici un id qui correspond à l'article qui contient les commentaires.
 class CommentController extends AbstractController
 {
+
+    /**
+     * @var Security
+     */
+    private $security;
+
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/", name="comment_index", methods={"GET"})
      * @param CommentRepository $commentRepository
+     * @param Comment $comment
      * @return Response
      */
     public function index(CommentRepository $commentRepository): Response
     {
         $comments = $commentRepository->findAll(['date_comment' => 'desc']);
 
+        return $this->render('comment/index.html.twig', [
+            'comments' => $comments
+        ]);
+    }
+
+    /**
+     * @Route("/article/{id}", name="comment_byarticle", methods={"GET"})
+     * @param CommentRepository $commentRepository
+     * @param Article $article
+     * @return Response
+     */
+    public function commentByBlog(CommentRepository $commentRepository, Article $article): Response
+    {
+        $comments = $commentRepository->findCommentsByBlog($article);
 
         return $this->render('comment/index.html.twig', [
             'comments' => $comments
@@ -37,13 +66,12 @@ class CommentController extends AbstractController
      * @Route("/new/{id}", name="comment_new")
      * @param Request $request
      * @param Article $article
-     * @param User $user
      * @return Response
      */
-    public function new(Request $request, Article $article, User $user): Response
+    public function new(Request $request, Article $article): Response
     {
 
-
+        $user = $this->security->getUser();
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('comment_new', array('id'=>$article->getId())),

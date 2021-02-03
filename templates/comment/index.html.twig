@@ -1,19 +1,32 @@
 {% block content %}
-    {% for comment in comments %}
-    <tr>
-        <td>{{ comment.article.id }}</td>
-        <td>{{ comment.commentContent }}</td>
-        <td>{{ comment.dateComment ? comment.dateComment|date('Y-m-d') : '' }}</td>
-        <td>
-            <a href="{{  path('comment_edit', {'id': comment.id}) }}">edit</a>
-            {{ include('comment/_delete_form.html.twig') }}
 
-        </td>
-    </tr>
+    {% for comment in comments %}
+
+        <div class="oneComment">
+        <div class="commentTitle">
+        Article lié: {{ comment.article.id }}
+            &nbsp;
+        {{ comment.dateComment ? comment.dateComment|date('Y-m-d') : '' }}
+            &nbsp;
+        <p>par {{ comment.author.email }}</p>
+        </div>
+        <div class="commentContent">
+            <td>{{ comment.commentContent }}</td>
+        </div>
+        <div class="boutonComment">
+            <button href="{{  path('comment_edit', {'id': comment.id}) }}">Edit</button>
+            &nbsp;&nbsp;
+            {{ include('comment/_delete_form.html.twig') }}
+        </div>
+        </div>
+
     {% else %}
     <tr>
         <td colspan="4">no records found</td>
     </tr>
+
+
+
     {% endfor %}
 
 

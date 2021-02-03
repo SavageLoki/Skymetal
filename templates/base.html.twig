@@ -6,15 +6,24 @@
     <script src="{{ asset('javascript/form_helper.js') }}"></script>
     {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/show_article.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dashboard.css') }}">
     {% endblock %}
 </head>
 <body>
-<nav>
+<nav class ='topnav'>
                 <a href="#" class="brand-logo">Skymetal</a>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Login</a></li>
-            </ul>
+                <a href="{{ path("homepage") }}">Articles</a>
+                {% if app.user == NULL %}
+                <a href="{{ path("app_login") }}">Login</a>
+                <a href="{{ path("user_app_register") }}">User register</a>
+                {% endif %}
+                {% if is_granted("ROLE_BLOGGER") %}
+                <a href="{{ path("dashboard") }}">Dashboard</a>
+                {% endif %}
+                {% if app.user != NULL %}
+                <a href="{{ path("app_logout") }}">Logout</a>
+                {% endif %}
 
 </nav>
 
