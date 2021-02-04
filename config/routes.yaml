@@ -25,3 +25,7 @@ dashboard:
 add:
   path: /add
   controller: App\Controller\HomepageController::add
+
+app_logout:
+  path: /logout
+  methods: GET
