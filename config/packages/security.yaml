@@ -22,15 +22,11 @@ security:
             security: false
         main:
             anonymous: true
-            lazy: true
             provider: chain_provider
             guard:
                 authenticators:
                     - App\Security\UserAuthenticator
-            logout:
-                path: _app_logout
-                # where to redirect after logout
-                target: homepage
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

@@ -33,15 +33,14 @@ class UserSecurityControlerController extends AbstractController
 
     /**
      * @Route("/logout", name="_app_logout")
+     * @param Request $request
+     * @param TokenStorageInterface $token
+     * @return Response
      */
-    public function logout(Request $request, TokenStorageInterface $token, EntityManagerInterface $manager):Response
+    public function logout(Request $request, TokenStorageInterface $token):Response
     {
         $user = $token->getToken()->getUser();
 
-        if (null !== $user) {
-            $manager->persist($user);
-            $manager->flush();
-        }
 
         $session = $request->getSession();
         $session->invalidate();
