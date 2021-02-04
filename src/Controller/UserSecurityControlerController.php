@@ -47,6 +47,6 @@ class UserSecurityControlerController extends AbstractController
         $session->invalidate();
         $token->setToken(null);
 
-        return $this->redirectToRoute('app_user_home');
+        return $this->redirectToRoute('homepage');
     }
 }
