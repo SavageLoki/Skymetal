@@ -28,7 +28,7 @@ security:
                 authenticators:
                     - App\Security\UserAuthenticator
             logout:
-                path: app_logout
+                path: _app_logout
                 # where to redirect after logout
                 target: homepage
 

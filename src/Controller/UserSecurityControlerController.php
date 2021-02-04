@@ -32,7 +32,7 @@ class UserSecurityControlerController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/logout", name="_app_logout")
      */
     public function logout(Request $request, TokenStorageInterface $token, EntityManagerInterface $manager):Response
     {
